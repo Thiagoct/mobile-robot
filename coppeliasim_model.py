@@ -21,7 +21,7 @@ def coppeliasim_model(rightVel, leftVel):
     sim.setInt32Param(sim.intparam_idle_fps, 0)
 
     dt=sim.getSimulationTimeStep()
-    print(dt)
+
 
     objectName='/PioneerP3DX'
     rightMotor=sim.getObject('/PioneerP3DX/rightMotor')

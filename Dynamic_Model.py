@@ -19,14 +19,10 @@ class Dynamic_Model:
 
 
     def step(self, torque_right, torque_left):
-        # Equações de Lagrange para as velocidades angulares das rodas
-        eq1 = sp.Eq(torque_right, self.I * self.omega_right)
-        eq2 = sp.Eq(torque_left, self.I * self.omega_left)
+        omega_right = (self.R * torque_right) / self.I
+        omega_left = (self.R * torque_left) / self.I
 
-        # Resolva as equações para as velocidades angulares das rodas
-        solutions = sp.solve((eq1, eq2), (self.omega_right, self.omega_left))
-
-        return solutions[self.omega_right], solutions[self.omega_left]
+        return omega_right, omega_left
 
 # Exemplo de uso:
 if __name__ == "__main__":
@@ -34,12 +30,13 @@ if __name__ == "__main__":
     # Crie um modelo de acionamento diferencial com os parâmetros especificados
     diff_drive_model = Dynamic_Model()
 
-    # Aplique torques nas rodas direita e esquerda (entrada do modelo)
-    torque_right = 2.0  # Nm
-    torque_left = 1.0  # Nm
+    # Valores de torque aplicados (exemplo)
+    torque_right_value = 3.0  # N·m
+    torque_left_value = 2.0   # N·m
 
-    # Calcule as velocidades angulares das rodas direita e esquerda
-    omega_right, omega_left = diff_drive_model.step(torque_right, torque_left)
+    # Calcular as velocidades angulares das rodas
+    omega_right, omega_left =diff_drive_model.step(torque_right_value, torque_left_value)
 
-    print(f"Velocidade Angular da Roda Direita: {omega_right} rad/s")
-    print(f"Velocidade Angular da Roda Esquerda: {omega_left} rad/s")
+    # Exibir as velocidades angulares calculadas
+    print("Velocidade angular da roda direita:", omega_right, "rad/s")
+    print("Velocidade angular da roda esquerda:", omega_left, "rad/s")
